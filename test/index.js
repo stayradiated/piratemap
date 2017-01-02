@@ -11,6 +11,17 @@ test('constructor', (t) => {
   t.is(m.size, 3)
 })
 
+test('clone via constructor', (t) => {
+  const a = new PirateMap()
+  a.set([1, 2, 3], 123)
+
+  const b = new PirateMap(a)
+  t.is(b.get([1, 2, 3]), 123)
+  b.set([1, 2, 3], 456)
+  t.is(a.get([1, 2, 3]), 123)
+  t.is(b.get([1, 2, 3]), 456)
+})
+
 test('clear', (t) => {
   const m = new PirateMap()
   t.is(m.size, 0)
