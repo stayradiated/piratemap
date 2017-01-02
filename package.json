@@ -1,6 +1,6 @@
 {
   "name": "piratemap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ES6 Map with support for complex keys",
   "main": "dist/index.js",
   "repository": {
