@@ -34,7 +34,7 @@
     "lint": "pkg-lint"
   },
   "devDependencies": {
-    "@stayradiated/pkg": "^1.1.1"
+    "@stayradiated/pkg": "^1.1.2"
   },
   "babel": {
     "presets": [
