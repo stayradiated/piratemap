@@ -18,7 +18,7 @@ retrieve a value.
 ```javascript
 const map = new Map()
 
-map.set({x: 20, y: 20}, 'here be treasure')
+map.set({x: 20, y: 30}, 'here be treasure')
 
 map.get({x: 20, y: 30}) // undefined !!!
 ```
@@ -28,7 +28,7 @@ But with PirateMap, you can do this!
 ```javascript
 const map = new PirateMap()
 
-map.set({x: 20, y: 20}, 'here be treasure')
+map.set({x: 20, y: 30}, 'here be treasure')
 
 map.get({x: 20, y: 30}) // 'here be treasure' !!!
 ```
