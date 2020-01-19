@@ -1,17 +1,18 @@
 const Benchmark = require('benchmark')
+const assert = require('assert')
 
 const PirateMap = require('./dist').default
 
 const pmap = new PirateMap([
-  [[10, 20], 1020],
-  [[20, 30], 2030],
-  [[30, 40], 3040],
+  [{a: 1, b: 2}, 12],
+  [{c: 3, d: 4}, 34],
+  [{e: 5, f: 6}, 56],
 ])
 
 const map = new Map([
-  ['10,20', 1020],
-  ['20,30', 2030],
-  ['30,40', 3040],
+  ['1,2', 12],
+  ['3,4', 34],
+  ['5,6', 56],
 ])
 
 const suite = new Benchmark.Suite('PirateMap vs Map', {
@@ -28,19 +29,19 @@ const suite = new Benchmark.Suite('PirateMap vs Map', {
 
 suite
   .add('PirateMap', () => {
-    pmap.get([10, 20])
-    pmap.get([20, 30])
-    pmap.get([30, 40])
+    assert(pmap.get({a: 1, b: 2}) == 12)
+    assert(pmap.get({c: 3, d: 4}) == 34)
+    assert(pmap.get({e: 5, f: 6}) == 56)
+  })
+  .add('Map with hardcoded string', () => {
+    assert(map.get('1,2') == 12)
+    assert(map.get('3,4') == 34)
+    assert(map.get('5,6') == 56)
   })
   .add('Map with join', () => {
-    map.get([10, 20].join(','))
-    map.get([20, 30].join(','))
-    map.get([30, 40].join(','))
-  })
-  .add('Map', () => {
-    map.get('10,20')
-    map.get('20,30')
-    map.get('30,40')
+    assert(map.get(Object.values({a: 1, b: 2}).join()) == 12)
+    assert(map.get(Object.values({c: 3, d: 4}).join()) == 34)
+    assert(map.get(Object.values({e: 5, f: 6}).join()) == 56)
   })
   .run({async: true})
 

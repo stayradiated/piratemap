@@ -4,8 +4,8 @@
 
 ## Installation
 
-```
-$ yarn add piratemap
+```shell
+npm install piratemap
 ```
 
 ## Why would I use this?
