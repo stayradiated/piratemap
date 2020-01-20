@@ -57,3 +57,7 @@ map.get({x: 4, y: 7}) // 'here be treasure' :)
 
 It has exactly the same API as the [builtin Map
 class.](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map)
+
+## License
+
+PirateMap is licensed under the [MIT License](./LICENSE.md).
