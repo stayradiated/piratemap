@@ -1,7 +1,7 @@
 {
   "name": "piratemap",
   "version": "2.1.0",
-  "description": "ES6 Map with support for complex keys",
+  "description": "ES6 Map, but the keys are compared by value instead of reference.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
@@ -26,18 +26,18 @@
   ],
   "scripts": {
     "build": "pkg-build",
+    "docs": "pkg-docs",
     "test": "pkg-test",
     "lint": "pkg-lint",
     "tidy": "pkg-tidy"
   },
   "devDependencies": {
     "@stayradiated/pkg": "^3.11.0",
-    "@types/node": "12.12.24"
+    "@types/node": "12.12.24",
+    "benchmark": "^2.1.4",
+    "@types/shallowequal": "1.1.1"
   },
   "dependencies": {
-    "@types/shallowequal": "1.1.1",
-    "benchmark": "^2.1.4",
-    "is-equal-shallow": "^0.1.3",
     "shallowequal": "1.1.0"
   }
 }
