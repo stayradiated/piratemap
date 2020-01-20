@@ -1,6 +1,7 @@
 ![PirateMap](./piratemap.png)
 
-> An extension of the builtin Map class, but the keys are compared by value instead of reference.
+> An extension of the builtin Map class, but the keys are compared by value
+> instead of reference.
 
 ## Installation
 
@@ -10,14 +11,18 @@ npm install piratemap
 
 ## Why would I use this?
 
-Because you want to use an object or array as a key in a Map. Unless you keep a
-reference to the original key, you will not be able to easily retrieve the
-value. You might also end up with accidental duplicates.
+If you want to use an object as a key in a Map - unless you keep a reference to
+the original object, you will not be able to easily retrieve the value, or you
+might also accidentally insert duplicate items.
+
+With PirateMap, the `has`, `get`, `set` and `delete` methods all perform a
+shallow compare to check if a key with the same value already exists in the
+map.
 
 ## Why would I _not_ use this?
 
-It's pretty slow... If you care about high performance, find a way to serialize
-your keys as strings.
+If you care about high performance, you may not want to use this library -
+instead try and find a way to serialize your keys as strings. 
 
 ## Examples
 
@@ -36,14 +41,16 @@ map.get(key) // 'here be tresure'
 map.get({ x: 4, y: 7 }) // undefined :(
 ```
 
-With PirateMap, this is fixed:
+With PirateMap, this is not an issue!
 
 ```javascript
+import PirateMap from 'piratemap'
+
 const map = new PirateMap()
 
-map.set({x: 20, y: 30}, 'here be treasure')
+map.set({x: 4, y: 7}, 'here be treasure')
 
-map.get({x: 20, y: 30}) // 'here be treasure'
+map.get({x: 4, y: 7}) // 'here be treasure' :)
 ```
 
 ## How do I use it?
