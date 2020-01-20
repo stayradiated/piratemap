@@ -1,2 +1,8 @@
-lib
-test
+yarn.lock
+benchmark.js
+*.log
+*.png
+dist/*.spec.js
+dist/tsconfig.tsbuildinfo
+docs
+src

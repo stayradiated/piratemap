@@ -1,4 +1,4 @@
-# Pirate Map
+![PirateMap](./piratemap.png)
 
 > An extension of the builtin Map class, but the keys are compared by value instead of reference.
 
