@@ -1,6 +1,6 @@
 {
   "name": "piratemap",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "ES6 Map, but the keys are compared by value instead of reference.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,8 +34,8 @@
   "devDependencies": {
     "@stayradiated/pkg": "^3.11.0",
     "@types/node": "12.12.24",
-    "benchmark": "^2.1.4",
-    "@types/shallowequal": "1.1.1"
+    "@types/shallowequal": "1.1.1",
+    "benchmark": "^2.1.4"
   },
   "dependencies": {
     "shallowequal": "1.1.0"
