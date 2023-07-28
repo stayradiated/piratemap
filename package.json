@@ -1,14 +1,24 @@
 {
   "name": "piratemap",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "ES6 Map, but the keys are compared by value instead of reference.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "tidy": "xo --fix ./src",
+    "test": "vitest --watch=false",
+    "bench": "vitest bench",
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stayradiated/piratemap.git"
   },
-  "author": "George Czabania <george@czabania.com>",
+  "author": {
+    "name": "George Czabania",
+    "email": "george@czabania.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/stayradiated/piratemap/issues"
@@ -24,20 +34,33 @@
     "shallow",
     "complex"
   ],
-  "scripts": {
-    "build": "pkg-build",
-    "docs": "pkg-docs",
-    "test": "pkg-test",
-    "lint": "pkg-lint",
-    "tidy": "pkg-tidy"
-  },
   "devDependencies": {
-    "@stayradiated/pkg": "^3.11.0",
-    "@types/node": "12.12.24",
-    "@types/shallowequal": "1.1.1",
-    "benchmark": "^2.1.4"
+    "@types/node": "20.4.5",
+    "typescript": "5.1.6",
+    "vitest": "0.33.0",
+    "xo": "0.55.0"
   },
   "dependencies": {
-    "shallowequal": "1.1.0"
+    "shallow-equal": "3.1.0"
+  },
+  "__comment": "The following configs are managed by `@stayradiated/jsconfig`",
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "prettier": true
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false
+  },
+  "imports": {
+    "#src/*": {
+      "node": "./dist/*"
+    }
   }
 }

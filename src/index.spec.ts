@@ -1,205 +1,220 @@
-import test from 'ava'
+import { test, expect } from 'vitest'
+import PirateMap from './index.js'
 
-import PirateMap from './index'
-
-test('constructor', (t) => {
+test('constructor', () => {
   const m = new PirateMap([
-    ['a', 1],
-    ['b', 2],
-    ['c', 3],
+    [['a'], 1],
+    [['b'], 2],
+    [['c'], 3],
   ])
-  t.is(m.size, 3)
+  expect(m.size).toBe(3)
 })
 
-test('clone via constructor', (t) => {
+test('clone via constructor', () => {
   const a = new PirateMap()
   a.set([1, 2, 3], 123)
 
   const b = new PirateMap(a)
-  t.is(b.get([1, 2, 3]), 123)
+  expect(b.get([1, 2, 3])).toBe(123)
   b.set([1, 2, 3], 456)
-  t.is(a.get([1, 2, 3]), 123)
-  t.is(b.get([1, 2, 3]), 456)
+  expect(a.get([1, 2, 3])).toBe(123)
+  expect(b.get([1, 2, 3])).toBe(456)
 })
 
-test('clear', (t) => {
+test('clear', () => {
   const m = new PirateMap()
-  t.is(m.size, 0)
-  m.set('key', 'value')
-  t.is(m.size, 1)
+  expect(m.size).toBe(0)
+  m.set(['key'], 'value')
+  expect(m.size).toBe(1)
   m.clear()
-  t.is(m.size, 0)
+  expect(m.size).toBe(0)
 })
 
-test('delete', (t) => {
+test('delete', () => {
   const m = new PirateMap()
   m.set([1, 2, 3], 'value')
-  t.is(m.size, 1)
+  expect(m.size).toBe(1)
   m.delete([1, 2, 3])
-  t.is(m.size, 0)
+  expect(m.size).toBe(0)
 })
 
-test('entries', (t) => {
+test('entries', () => {
   const m = new PirateMap()
   m.set([1, 2, 3], 'value')
   const iter = m.entries()
-  t.deepEqual(iter.next(), {
+  expect(iter.next()).toStrictEqual({
     value: [[1, 2, 3], 'value'],
     done: false,
   })
-  t.deepEqual(iter.next(), {
+  expect(iter.next()).toStrictEqual({
     value: undefined,
     done: true,
   })
 })
 
-test('forEach', (t) => {
+test('forEach', () => {
   const m = new PirateMap()
   m.set([1], 1)
   m.set([2], 2)
   m.set([3], 3)
-  t.plan(9)
+  expect.assertions(9)
   const self = Symbol('self')
-  m.forEach(function callbackFn (value, key, map) {
-    t.is(map, m)
-    t.is(this, self)
+  // eslint-disable-next-line unicorn/no-array-for-each
+  m.forEach(function (this: PirateMap<[number], number>, value, key, map) {
+    expect(map).toBe(m)
+    expect(this).toBe(self)
     switch (value) {
-      case 1:
-        t.deepEqual(key, [1])
+      case 1: {
+        expect(key).toEqual([1])
         break
-      case 2:
-        t.deepEqual(key, [2])
+      }
+
+      case 2: {
+        expect(key).toEqual([2])
         break
-      case 3:
-        t.deepEqual(key, [3])
+      }
+
+      case 3: {
+        expect(key).toEqual([3])
         break
-      default:
-        throw new Error(`Could handle value: ${value}`)
+      }
+
+      default: {
+        throw new Error(`Could handle value: ${String(value)}`)
+      }
     }
+    // eslint-disable-next-line unicorn/no-array-method-this-argument
   }, self)
 })
 
-test('get', (t) => {
+test('get', () => {
   const m = new PirateMap()
-  // undefined
+  // Undefined
   m.set(undefined, true)
-  t.true(m.get(undefined))
-  // null
+  expect(m.get(undefined)).toBe(true)
+  // Null
   m.set(null, true)
-  t.true(m.get(null))
-  // number
-  m.set(0, true)
-  t.true(m.get(0))
-  // string
-  m.set('', true)
-  t.true(m.get(''))
-  // boolean
-  m.set(false, true)
-  t.true(m.get(false))
-  // empty array
+  expect(m.get(null)).toBe(true)
+  // Number
+  m.set([0], true)
+  expect(m.get([0])).toBe(true)
+  // String
+  m.set([''], true)
+  expect(m.get([''])).toBe(true)
+  // Boolean
+  m.set([false], true)
+  expect(m.get([false])).toBe(true)
+  // Empty array
   m.set([], true)
-  t.true(m.get([]))
-  // non-empty array
+  expect(m.get([])).toBe(true)
+  // Non-empty array
   m.set([1, 2, 3], true)
-  t.true(m.get([1, 2, 3]))
-  // empty object
+  expect(m.get([1, 2, 3])).toBe(true)
+  // Empty object
   m.set({}, true)
-  t.true(m.get({}))
-  // non-empty object
+  expect(m.get({})).toBe(true)
+  // Non-empty object
   m.set({ a: 1, b: 2 }, true)
-  t.true(m.get({ a: 1, b: 2 }))
+  expect(m.get({ a: 1, b: 2 })).toBe(true)
 })
 
-test('has', (t) => {
+test('has', () => {
   const m = new PirateMap()
-  // undefined
+  // Undefined
   m.set(undefined, true)
-  t.true(m.has(undefined))
-  // null
+  expect(m.has(undefined)).toBe(true)
+  // Null
   m.set(null, true)
-  t.true(m.has(null))
-  // number
-  m.set(0, true)
-  t.true(m.has(0))
-  // string
-  m.set('', true)
-  t.true(m.has(''))
-  // boolean
-  m.set(false, true)
-  t.true(m.has(false))
-  // empty array
+  expect(m.has(null)).toBe(true)
+  // Number
+  m.set([0], true)
+  expect(m.has([0])).toBe(true)
+  // String
+  m.set([''], true)
+  expect(m.has([''])).toBe(true)
+  // Boolean
+  m.set([false], true)
+  expect(m.has([false])).toBe(true)
+  // Empty array
   m.set([], true)
-  t.true(m.has([]))
-  // non-empty array
+  expect(m.has([])).toBe(true)
+  // Non-empty array
   m.set([1, 2, 3], true)
-  t.true(m.has([1, 2, 3]))
-  // empty object
+  expect(m.has([1, 2, 3])).toBe(true)
+  // Empty object
   m.set({}, true)
-  t.true(m.has({}))
-  // non-empty object
+  expect(m.has({})).toBe(true)
+  // Non-empty object
   m.set({ a: 1, b: 2 }, true)
-  t.true(m.has({ a: 1, b: 2 }))
+  expect(m.has({ a: 1, b: 2 })).toBe(true)
 })
 
-test('keys', (t) => {
+test('keys', () => {
   const m = new PirateMap()
   m.set([1], 1)
   m.set([2], 2)
   m.set([3], 3)
   const iter = m.keys()
-  t.deepEqual(iter.next(), { value: [1], done: false })
-  t.deepEqual(iter.next(), { value: [2], done: false })
-  t.deepEqual(iter.next(), { value: [3], done: false })
-  t.deepEqual(iter.next(), { value: undefined, done: true })
+  expect(iter.next()).toEqual({ value: [1], done: false })
+  expect(iter.next()).toEqual({ value: [2], done: false })
+  expect(iter.next()).toEqual({ value: [3], done: false })
+  expect(iter.next()).toEqual({ value: undefined, done: true })
 })
 
-test('set', (t) => {
+test('set', () => {
   const m = new PirateMap()
   m.set([1], 1)
   m.set([2], 2)
   m.set([3], 3)
-  t.deepEqual(m.get([1]), 1)
-  t.deepEqual(m.get([2]), 2)
-  t.deepEqual(m.get([3]), 3)
+  expect(m.get([1])).toBe(1)
+  expect(m.get([2])).toBe(2)
+  expect(m.get([3])).toBe(3)
   m.set([1], 'a')
   m.set([2], 'b')
   m.set([3], 'c')
-  t.deepEqual(m.get([1]), 'a')
-  t.deepEqual(m.get([2]), 'b')
-  t.deepEqual(m.get([3]), 'c')
+  expect(m.get([1])).toBe('a')
+  expect(m.get([2])).toBe('b')
+  expect(m.get([3])).toBe('c')
 })
 
-test('values', (t) => {
+test('values', () => {
   const m = new PirateMap()
   m.set([1], 1)
   m.set([2], 2)
   m.set([3], 3)
   const iter = m.values()
-  t.deepEqual(iter.next(), { value: 1, done: false })
-  t.deepEqual(iter.next(), { value: 2, done: false })
-  t.deepEqual(iter.next(), { value: 3, done: false })
-  t.deepEqual(iter.next(), { value: undefined, done: true })
+  expect(iter.next()).toEqual({ value: 1, done: false })
+  expect(iter.next()).toEqual({ value: 2, done: false })
+  expect(iter.next()).toEqual({ value: 3, done: false })
+  expect(iter.next()).toEqual({ value: undefined, done: true })
 })
 
-test('@@iterator', (t) => {
+test('@@iterator', () => {
   const m = new PirateMap()
   m.set([1], 1)
   m.set([2], 2)
   m.set([3], 3)
-  t.plan(3)
+  expect.assertions(3)
   for (const [key, value] of m) {
     switch (value) {
-      case 1:
-        t.deepEqual(key, [1])
+      case 1: {
+        expect(key).toEqual([1])
         break
-      case 2:
-        t.deepEqual(key, [2])
+      }
+
+      case 2: {
+        expect(key).toEqual([2])
         break
-      case 3:
-        t.deepEqual(key, [3])
+      }
+
+      case 3: {
+        expect(key).toEqual([3])
         break
-      default:
-        throw new Error(`Could handle value: ${value}`)
+      }
+
+      default: {
+        throw new Error(`Could handle value: ${String(value)}`)
+      }
     }
   }
 })
