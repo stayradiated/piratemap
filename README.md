@@ -15,9 +15,8 @@ If you want to use an object as a key in a Map - unless you keep a reference to
 the original object, you will not be able to easily retrieve the value, or you
 might also accidentally insert duplicate items.
 
-With PirateMap, the `has`, `get`, `set` and `delete` methods all perform a
-shallow compare to check if a key with the same value already exists in the
-map.
+PirateMap provides `has`, `get`, `set` and `delete` methods that check if a key
+with the same value already exists in the map.
 
 ## Why would I _not_ use this?
 
@@ -43,20 +42,48 @@ map.get({ x: 4, y: 7 }) // undefined :(
 
 With PirateMap, this is not an issue!
 
-```javascript
-import { pirateMapObject } from 'piratemap'
+```typescript
+import { createPirateMap } from 'piratemap'
+
+type Coordinates = { x: number, y: number }
+const pirateMap = createPirateMap<Coordinates>((a, b) => {
+    return a.x === b.x && a.y === b.y
+})
 
 const map = new Map()
 
-pirateMapObject.set(map, {x: 4, y: 7}, 'here be treasure')
+pirateMap.set(map, {x: 4, y: 7}, 'here be treasure')
 
-pirateMapObject.get(map, {x: 4, y: 7}) // 'here be treasure' :)
+pirateMap.get(map, {x: 4, y: 7}) // 'here be treasure' :)
 ```
 
 ## How do I use it?
 
-Choose either `pirateMapObject` or `pirateMapArray`, depending on the data type
-of your map key.
+Use `createPirateMap` with own equality function, or use a library like
+`shallow-equal`.
+
+```typescript
+import { createPirateMap } from 'piratemap'
+
+type Key = {
+    id: number
+    rangeStart: number
+    rangeEnd: number
+}
+
+const pirateMap = createPirateMap<Key>((a, b) => {
+    return (
+        a.id === b.id &&
+        a.rangeStart === b.rangeStart &&
+        a.rangeEnd === b.rangeEnd
+    )
+})
+
+const map = new Map<Key, Value[]>()
+
+pirateMap.set(map, { id, rangeStart, rangeEnd }, values[])
+pirateMap.get(map, { id, rangeStart, rangeEnd })
+```
 
 ### API
 
@@ -108,34 +135,6 @@ const map = new Map([
 pirateMapArray.delete(map, [1, 2])
 
 [...map.entries()] // [ [[0, 1], '0-1'] ]
-```
-
-### Custom Equality Function
-
-There is also a `createPirateMap` function you can use to supply your own
-equality function.
-
-```typescript
-import { createPirateMap } from 'piratemap'
-
-type Key = {
-    id: number
-    rangeStart: number
-    rangeEnd: number
-}
-
-const pirateMap = createPirateMap<Key>((a, b) => {
-    return (
-        a.id === b.id &&
-        a.rangeStart === b.rangeStart &&
-        a.rangeEnd === b.rangeEnd
-    )
-})
-
-const map = new Map<Key, Value[]>()
-
-pirateMap.set(map, { id, rangeStart, rangeEnd }, values[])
-pirateMap.get(map, { id, rangeStart, rangeEnd })
 ```
 
 ## License

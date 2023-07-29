@@ -1,9 +1,5 @@
 import { bench } from 'vitest'
-import {
-  createPirateMap,
-  pirateMapArray,
-  pirateMapObject,
-} from './pirate-map.js'
+import { createPirateMap } from './pirate-map.js'
 
 type ObjectKey = { a: number; b: number }
 type ArrayKey = [number, number]
@@ -43,10 +39,6 @@ for (const [key, value] of mapObject.entries()) {
   mapArrayString.set([key.a, key.b].join(','), value)
 }
 
-bench('pirateMapObject', () => {
-  pirateMapObject.get(mapObject, randomObjectKey())
-})
-
 bench('customPirateMapObject', () => {
   customPirateMapObject.get(mapObject, randomObjectKey())
 })
@@ -57,10 +49,6 @@ bench('Map + JSON.stringify', () => {
 
 bench('customPirateMapArray', () => {
   customPirateMapArray.get(mapArray, randomArrayKey())
-})
-
-bench('pirateMapArray', () => {
-  pirateMapArray.get(mapArray, randomArrayKey())
 })
 
 bench('Map + Array.join', () => {

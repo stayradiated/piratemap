@@ -1,5 +1,3 @@
-import { shallowEqualObjects, shallowEqualArrays } from 'shallow-equal'
-
 type SetLike<K> = {
   delete(key: K): boolean
   add(key: K): SetLike<K>
@@ -37,9 +35,4 @@ const createPirateSet = <Key>(isEqual: (a: Key, b: Key) => boolean) => ({
   },
 })
 
-const pirateSetObject =
-  createPirateSet<Record<string, any>>(shallowEqualObjects)
-
-const pirateSetArray = createPirateSet<any[]>(shallowEqualArrays)
-
-export { createPirateSet, pirateSetObject, pirateSetArray }
+export { createPirateSet }

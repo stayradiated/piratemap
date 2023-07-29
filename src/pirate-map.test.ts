@@ -1,5 +1,10 @@
 import { describe, test, expect } from 'vitest'
-import { pirateMapArray as pmArray } from './pirate-map.js'
+import { createPirateMap } from './pirate-map.js'
+
+type ArrayKey = number[]
+const pmArray = createPirateMap<ArrayKey>((a, b) => {
+  return a.length === b.length && a.every((value, index) => value === b[index])
+})
 
 describe('pirateMapArray', () => {
   test('delete', () => {

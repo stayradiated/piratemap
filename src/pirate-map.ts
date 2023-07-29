@@ -1,5 +1,3 @@
-import { shallowEqualObjects, shallowEqualArrays } from 'shallow-equal'
-
 type MapLike<K, V> = {
   delete(key: K): boolean
   set(key: K, value: V): MapLike<K, V>
@@ -46,8 +44,4 @@ const createPirateMap = <Key>(isEqual: (a: Key, b: Key) => boolean) => ({
   },
 })
 
-const pirateMapObject =
-  createPirateMap<Record<string, any>>(shallowEqualObjects)
-const pirateMapArray = createPirateMap<any[]>(shallowEqualArrays)
-
-export { createPirateMap, pirateMapObject, pirateMapArray }
+export { createPirateMap }
