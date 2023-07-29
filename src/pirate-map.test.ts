@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { pirateMapArray as pmArray } from './index.js'
+import { pirateMapArray as pmArray } from './pirate-map.js'
 
 describe('pirateMapArray', () => {
   test('delete', () => {

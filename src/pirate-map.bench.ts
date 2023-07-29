@@ -1,5 +1,9 @@
 import { bench } from 'vitest'
-import { createPirateMap, pirateMapArray, pirateMapObject } from './index.js'
+import {
+  createPirateMap,
+  pirateMapArray,
+  pirateMapObject,
+} from './pirate-map.js'
 
 type ObjectKey = { a: number; b: number }
 type ArrayKey = [number, number]
