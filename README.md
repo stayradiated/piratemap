@@ -44,19 +44,99 @@ map.get({ x: 4, y: 7 }) // undefined :(
 With PirateMap, this is not an issue!
 
 ```javascript
-import PirateMap from 'piratemap'
+import { pirateMapObject } from 'piratemap'
 
-const map = new PirateMap()
+const map = new Map()
 
-map.set({x: 4, y: 7}, 'here be treasure')
+pirateMapObject.set(map, {x: 4, y: 7}, 'here be treasure')
 
-map.get({x: 4, y: 7}) // 'here be treasure' :)
+pirateMapObject.get(map, {x: 4, y: 7}) // 'here be treasure' :)
 ```
 
 ## How do I use it?
 
-It has exactly the same API as the [builtin Map
+Choose either `pirateMapObject` or `pirateMapArray`, depending on the data type
+of your map key.
+
+### API
+
+The API mimics methods on the [built-in Map
 class.](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map)
+#### `get`
+
+```typescript
+const map = new Map([
+    [[1, 2, 3], 'value']
+])
+
+pirateMapArray.get(map, [1, 2, 3]) // value
+pirateMapArray.get(map, [4, 5, 6]) // undefined
+```
+
+#### `has`
+
+```typescript
+const map = new Map([
+    [[1, 2, 3], 'value']
+])
+
+pirateMapArray.has(map, [1, 2, 3]) // true
+pirateMapArray.has(map, [4, 5, 6]) // false
+```
+
+#### `set`
+
+```typescript
+const map = new Map([
+    [[0, 1], '0-1']
+    [[1, 2], '1-2']
+])
+
+pirateMapArray.set(map, [1, 2], 'new value')
+
+[...map.entries()] // [ [[0, 1], '0-1'], [[1, 2], 'new value'] ]
+```
+
+#### `delete`
+
+```typescript
+const map = new Map([
+    [[0, 1], '0-1']
+    [[1, 2], '1-2']
+])
+
+pirateMapArray.delete(map, [1, 2])
+
+[...map.entries()] // [ [[0, 1], '0-1'] ]
+```
+
+### Custom Equality Function
+
+There is also a `createPirateMap` function you can use to supply your own
+equality function.
+
+```typescript
+import { createPirateMap } from 'piratemap'
+
+type Key = {
+    id: number
+    rangeStart: number
+    rangeEnd: number
+}
+
+const pirateMap = createPirateMap<Key>((a, b) => {
+    return (
+        a.id === b.id &&
+        a.rangeStart === b.rangeStart &&
+        a.rangeEnd === b.rangeEnd
+    )
+})
+
+const map = new Map<Key, Value[]>()
+
+pirateMap.set(map, { id, rangeStart, rangeEnd }, values[])
+pirateMap.get(map, { id, rangeStart, rangeEnd })
+```
 
 ## License
 
