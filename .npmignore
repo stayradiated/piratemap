@@ -1,8 +1,8 @@
-yarn.lock
-benchmark.js
+pnpm-lock.yaml
 *.log
 *.png
-dist/*.spec.js
+dist/*.test.*
+dist/*.bench.*
 dist/tsconfig.tsbuildinfo
 docs
 src

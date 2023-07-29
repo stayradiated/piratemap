@@ -9,7 +9,8 @@
     "tidy": "xo --fix ./src",
     "test": "vitest --watch=false",
     "bench": "vitest bench",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "$npm_execpath run build"
   },
   "repository": {
     "type": "git",
