@@ -1,8 +1,10 @@
 pnpm-lock.yaml
 *.log
 *.png
-dist/*.test.*
-dist/*.bench.*
-dist/tsconfig.tsbuildinfo
+*.test.d.ts
+*.test.js
+*.bench.js
+*.bench.d.ts
 docs
 src
+tsconfig.json
